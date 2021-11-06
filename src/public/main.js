@@ -1,9 +1,10 @@
 const INPUT_COORDINATES_ID = 'input-map-coordinates';
 const BTN_SUBMIT_ID = 'btn-submit';
-const IMG_MAP = 'img-map';
+const IMG_MAP_ID = 'img-map';
+const SPINNER_IMG_LOAD = 'img-loader-spinner';
 
 const PATTERN_VALIDATION_MAPS_COORDINATES = /^[-]?\d+[\.]?\d*\/[-]?\d+[\.]?\d*$/;
-const API_URI_MAPS_IMAGES = `/api/maps/images`
+const API_URI_MAPS_IMAGES = `/api/maps/images`;
 
 const throwError = ({ error, description, userMessage = `Invalid value, please try again` }) => {
   throw { error, description, userMessage };
@@ -51,8 +52,17 @@ const getMapImageUrl = async (coordinates) => {
 };
 
 const setMapImage = (imageUrl) => {
-  const imageElement = document.getElementById(IMG_MAP);
+  const imageElement = document.getElementById(IMG_MAP_ID);
   imageElement.src = imageUrl;
+};
+
+const showSpinner = (show) => {
+  const spinner = document.getElementById(SPINNER_IMG_LOAD);
+  if (show) {
+    spinner.classList.remove('visually-hidden');
+  } else {
+    spinner.classList.add('visually-hidden');
+  }
 }
 
 const showErrorMessage = (errorMessage) => {
@@ -61,10 +71,12 @@ const showErrorMessage = (errorMessage) => {
 
 const onBtnSubmitClicked = async () => {
   try {
+    showSpinner(true);
     const inputCoordinates = document.getElementById(INPUT_COORDINATES_ID);
     const coordinates = getCoordinatesFromElementInputDOM(inputCoordinates);
     const imageUrl = await getMapImageUrl(coordinates);
     setMapImage(imageUrl);
+    showSpinner(false);
   } catch (error) {
     console.log(error);
     showErrorMessage(error.description);
