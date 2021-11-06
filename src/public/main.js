@@ -1,4 +1,5 @@
 const INPUT_COORDINATES_ID = 'input-map-coordinates';
+const INPUT_DATE = 'input-date';
 const BTN_SUBMIT_ID = 'btn-submit';
 const IMG_MAP_ID = 'img-map';
 const SPINNER_IMG_LOAD = 'img-loader-spinner';
@@ -29,11 +30,16 @@ const getCoordinatesFromElementInputDOM = (input) => {
   return { latitude, longitude };
 };
 
-const getMapImageUrl = async (coordinates) => {
+const getMapImageUrl = async (coordinates, date) => {
   try {
+    const body = {
+      ...coordinates,
+      date,
+    };
+
     const options = {
       method: 'POST',
-      body: JSON.stringify(coordinates),
+      body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -73,8 +79,11 @@ const onBtnSubmitClicked = async () => {
   try {
     showSpinner(true);
     const inputCoordinates = document.getElementById(INPUT_COORDINATES_ID);
+    const inputDate = document.getElementById(INPUT_DATE);
+    const date = inputDate.value;
     const coordinates = getCoordinatesFromElementInputDOM(inputCoordinates);
-    const imageUrl = await getMapImageUrl(coordinates);
+    const imageUrl = await getMapImageUrl(coordinates, date);
+
     setMapImage(imageUrl);
     showSpinner(false);
   } catch (error) {
