@@ -20,7 +20,7 @@ export class EarthApi extends NasaApi {
       const data = await apiResponse.data;
       return data;
     } catch (error) {
-      return `Not received data from Nasa Api`;
+      throw `Not received data from Nasa Api`;
     }
   }
 }

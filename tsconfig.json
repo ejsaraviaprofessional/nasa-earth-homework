@@ -11,9 +11,11 @@
       "resolveJsonModule": true,
       "composite": true,
       "declaration": true,
+      "baseUrl": "./src",
       "declarationMap": true
     },
     "include": [
-      "src/**/*"
+      "src/**/*",
+      "src/public/*"
     ]
   }

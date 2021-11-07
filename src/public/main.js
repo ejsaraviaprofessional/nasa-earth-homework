@@ -48,7 +48,9 @@ const getMapImageUrl = async (coordinates, date) => {
     console.log(options);
     const response = await fetch(API_URI_MAPS_IMAGES, options);
     const data = await response.json();
-    console.log(data);
+    if (response.status !== 200) {
+      throw 'api error'
+    }
     return data.urlImage;
   } catch (error) {
     throwError({
@@ -77,6 +79,7 @@ const showSpinner = (show) => {
 
 const showErrorMessage = (errorMessage) => {
   alert(errorMessage);
+  spinner.classList.add('visually-hidden');
 };
 
 const onBtnSubmitClicked = async () => {

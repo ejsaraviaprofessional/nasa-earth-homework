@@ -9,7 +9,6 @@ export const getMapImageByCoordinates = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
-  console.log(request.body)
   const { longitude, latitude, date } = request.body;
   const imageName = `${longitude}_${latitude}.png`;
   const imagePath = path.join(config.publicPath, imageName);
@@ -20,8 +19,6 @@ export const getMapImageByCoordinates = async (
       date: date,
     });
 
-    console.log(image)
-    // await saveFile(image, imagePath);
     return response.json({
       urlImage: image.url,
     });
