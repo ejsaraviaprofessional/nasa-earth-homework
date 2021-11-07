@@ -9,6 +9,8 @@ const app: Application = express();
 app.use(cors());
 app.use(express.json());
 
+console.log(config)
+
 app.use('/', express.static(config.publicPath));
 app.use('/api', api);
 

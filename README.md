@@ -26,7 +26,7 @@ Create a simple web page application that allows user to look at aerial photogra
 
 ```bash
 
-# install commitizen 
+# install commitizen (conventional commits)
 npm i -g commitizen
 
 # run prettier watcher (run in another terminal)
